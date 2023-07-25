@@ -1,0 +1,53 @@
+<div class="flex">
+
+  <div>
+    <mat-form-field appearance="fill" >
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" (dateChange)="change($event)">
+
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+  </div>
+
+      <div class="container">
+
+        <h1>Información</h1>
+
+
+        <table id="customers">
+          <tr>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>N-Equipo</th>
+            <th>Tipo de Pago</th>
+            <th>Ingreso</th>
+            <th>Egreso</th>
+            <th>Saldo</th>
+            <th>Observacion</th>
+          </tr>
+
+          <tr *ngFor="let d of data;">
+            <td>{{d.Fecha | date:'dd-MM-yyyy'}}</td>
+            <td>{{d.Concepto}}</td>
+            <td>{{d.NEquipo}}</td>
+            <td>{{d.TipoPago}}</td>
+            <td>{{d.Ingreso | currency}}</td>
+            <td>{{d.Egreso | currency}}</td>
+            <td>{{d.Saldo | currency}}</td>
+            <td>{{d.ObservactionIngreso}}</td>
+          </tr>
+        </table>
+
+      </div>
+</div>
+
+<div class="resultados">
+  <h2>Resultados:</h2>
+<p class="label" style="margin-top: 50px;">Efectivo:    <span class="monto">{{efectivo | currency}}</span></p>
+<p class="label" style="margin-top: 50px;">Tarjeta: <span class="monto">{{tarjeta | currency}}</span></p>
+<p class="label" style="margin-top: 50px;">Transferencia: <span class="monto">{{transferencia | currency}}</span></p>
+<p class="label" style="margin-top: 50px;">TOTALES: <span class="monto">{{(efectivo+tarjeta+transferencia | currency)}}</span></p>
+</div>
