@@ -16,11 +16,44 @@ export class TableDataComponent implements OnInit {
   public transferencia:number=0;
   ngOnInit(): void {
   }
-  public change(event:MatDatepickerInputEvent<Date>):void{
+  public change(event:MatDatepickerInputEvent<Date> | any):void{
     this.tarjeta=0;
     this.transferencia=0;
     this.efectivo=0;
     const fecha=event.value?.getFullYear()+"-"+(event.value!.getMonth()+1)+"-"+event.value?.getDate();
+    this.service.getIncomes(fecha).subscribe(res=>{
+
+      this.data=res.incomes;
+      console.log(this.data);
+     this.data.forEach((income:any)=>{
+
+      var monto =parseInt(income.Saldo);
+      switch(income.TipoPago){
+
+        case 'EFECTIVO':
+          this.efectivo+=monto;
+          break;
+          case 'TRANSFERENCIA':
+          this.transferencia+=monto;
+          break;
+          case 'TARJETA':
+          this.tarjeta+=monto;
+          break;
+      }
+     });
+
+
+  });
+}
+  public resultReceived(date:string):void{
+    this.calculoTotales(new Date(date));
+  }
+  public calculoTotales(date:Date):void{
+    this.tarjeta=0;
+    this.transferencia=0;
+    this.efectivo=0;
+    const fecha=date?.getFullYear()+"-"+(date!.getMonth()+1)+"-"+date?.getDate();
+
     this.service.getIncomes(fecha).subscribe(res=>{
 
       this.data=res.incomes;
@@ -44,5 +77,5 @@ export class TableDataComponent implements OnInit {
 
 
   });
-}
+  }
 }

@@ -7,11 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class InformationService {
 
-  public url:string='http://localhost:4000/information';
+  public url:string='http://localhost:4000/';
   constructor(private http:HttpClient) { }
 
 
   public getIncomes(date:string):Observable<any>{
-    return this.http.post(this.url,{date:date});
+    return this.http.post(this.url+"information",{date:date});
+  }
+  public agregarRegistro(registro:any):Observable<any>{
+    return this.http.post(this.url+"agregarRegistro",{information:registro});
   }
 }
